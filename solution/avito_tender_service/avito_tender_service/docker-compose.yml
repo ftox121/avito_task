@@ -1,0 +1,18 @@
+services:
+  db:
+    image: postgres:13
+    environment:
+      POSTGRES_DB: tenders_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: Nbveh1775
+    ports:
+      - "5432:5432"
+  web:
+    build: .
+    command: python manage.py runserver 0.0.0.0:8080
+    volumes:
+      - .:/code
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
