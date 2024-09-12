@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: django-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: django
+  template:
+    metadata:
+      labels:
+        app: django
+    spec:
+      containers:
+      - name: zadanie-6105
+        image: zadanie-6105-web
+        ports:
+        - containerPort: 8080
+        env:
+        - name: DATABASE_URL
+          value: "postgres://cnrprod1725726301-team-78213:cnrprod1725726301-team-78213@rc1b-5xmqy6bq501kls4m.mdb.yandexcloud.net:6432/cnrprod1725726301-team-78213"

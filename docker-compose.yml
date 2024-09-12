@@ -2,12 +2,15 @@ services:
   db:
     image: postgres:13
     environment:
-      POSTGRES_DB: tenders_db
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: Nbveh1775
+      POSTGRES_DB: cnrprod1725726301-team-78213
+      POSTGRES_USER: cnrprod1725726301-team-78213
+      POSTGRES_PASSWORD: cnrprod1725726301-team-78213
     ports:
       - "5432:5432"
   web:
+    environment:
+      - DATABASE_URL=postgres://cnrprod1725726301-team-78213:cnrprod1725726301-team-78213@rc1b-5xmqy6bq501kls4m.mdb.yandexcloud.net:6432/cnrprod1725726301-team-78213
+
     build: .
     command: python manage.py runserver 0.0.0.0:8080
     volumes:

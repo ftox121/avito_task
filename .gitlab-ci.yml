@@ -1,18 +1,26 @@
+image: python:3.12
+services:
+  - postgres:13
+
+variables:
+  DATABASE_URL: postgres://cnrprod1725726301-team-78213:cnrprod1725726301-team-78213@rc1b-5xmqy6bq501kls4m.mdb.yandexcloud.net:6432/cnrprod1725726301-team-78213
+
 stages:
-  - build
+  - test
   - deploy
 
+before_script:
+  - pip install -r requirements.txt
 
-build:
-  stage: build
+test:
+  stage: test
   script:
-    - docker-compose -f docker-compose.yml build
-  only:
-    - master
+    - python manage.py test
 
 deploy:
   stage: deploy
   script:
-   - docker-compose -f docker-compose.yml up -d
-  only:
-    - master
+    - docker build -t zadanie-6105-web .
+    - docker push zadanie-6105-web
+    - kubectl apply -f deployment.yaml
+    - kubectl apply -f service.yaml

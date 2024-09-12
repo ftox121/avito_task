@@ -79,13 +79,13 @@ WSGI_APPLICATION = 'avito_tender_service.wsgi.application'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 DATABASES = {
-     'default': {
+    'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'tenders_db',
-        'USER': 'postgres',
-        'PASSWORD': 'Nbveh1775',
-        'HOST': 'db',
-        'PORT': '5432',
+        'NAME': 'cnrprod1725726301-team-78213',
+        'USER': 'cnrprod1725726301-team-78213',
+        'PASSWORD': 'cnrprod1725726301-team-78213',
+        'HOST': 'rc1b-5xmqy6bq501kls4m.mdb.yandexcloud.net',
+        'PORT': '6432',
     }
 }
 
