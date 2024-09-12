@@ -26,8 +26,8 @@ class TenderCreateView(generics.CreateAPIView):
 
     def create(self, request, *args, **kwargs):
         data = request.data
-        organization_id = data.get('organization')
-        creator_username = data.get('creator')
+        organization_id = data.get('organizationId')
+        creator_username = data.get('creatorUsername')
 
         if not organization_id:
             return Response({'error': 'organization is required'}, status=status.HTTP_400_BAD_REQUEST)
@@ -47,7 +47,7 @@ class TenderCreateView(generics.CreateAPIView):
         tender = Tender.objects.create(
             name=data.get('name', ''),
             description=data.get('description', ''),
-            service_type=data.get('service_type', ''),
+            service_type=data.get('serviceType', ''),
             status=data.get('status', ''),
             organization=organization,
             creator=creator
