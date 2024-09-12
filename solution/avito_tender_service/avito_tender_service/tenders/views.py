@@ -26,24 +26,35 @@ class TenderCreateView(generics.CreateAPIView):
 
     def create(self, request, *args, **kwargs):
         data = request.data
+        organization_id = data.get('organization')
+        creator_username = data.get('creator')
+
+        if not organization_id:
+            return Response({'error': 'organization is required'}, status=status.HTTP_400_BAD_REQUEST)
+        if not creator_username:
+            return Response({'error': 'creator is required'}, status=status.HTTP_400_BAD_REQUEST)
+
         try:
-            organization = Organization.objects.get(id=data['organizationId'])
-            creator = Employee.objects.get(username=data['creatorUsername'])
+            organization = Organization.objects.get(id=organization_id)
         except Organization.DoesNotExist:
             return Response({'error': 'Organization not found'}, status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            creator = Employee.objects.get(username=creator_username)
         except Employee.DoesNotExist:
             return Response({'error': 'Employee not found'}, status=status.HTTP_400_BAD_REQUEST)
 
         tender = Tender.objects.create(
-            name=data['name'],
-            description=data['description'],
-            service_type=data['serviceType'],
-            status=data['status'],
+            name=data.get('name', ''),
+            description=data.get('description', ''),
+            service_type=data.get('service_type', ''),
+            status=data.get('status', ''),
             organization=organization,
             creator=creator
         )
+
         serializer = TenderSerializer(tender)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
 class UserTenderListView(generics.ListAPIView):
